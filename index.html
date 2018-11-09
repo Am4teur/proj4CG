@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset=”UTF-8”>
+        <title>Projeto 3 - CG@IST/UL (2018/2019)</title>
+        <style>
+            body {
+                margin: 0px;
+                background-color: #ffffff;
+                overflow: hidden;
+            }
+        </style>
+        <script src="three.js"></script>
+        <script src="OrbitControls.js"></script>
+        <script src="cena.js"></script>
+        <script src="graphicEntity.js"></script>
+        <script src="plane.js"></script>
+        <script src="spotlight.js"></script>
+    </head>
+    <body>      
+        <script>
+            init();
+            controls=new THREE.OrbitControls(camera, renderer.domElement);
+            animate();
+        </script>
+    </body>
+</html>
