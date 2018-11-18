@@ -383,7 +383,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	function dollyIn( dollyScale ) {
 
-		if ( scope.object.isPerspectiveCamera ) {
+		if ( scope.object.type = "PerspectiveCamera" ) {
 
 			scale /= dollyScale;
 
@@ -404,7 +404,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	function dollyOut( dollyScale ) {
 
-		if ( scope.object.isPerspectiveCamera ) {
+		if ( scope.object.type = "PerspectiveCamera" ) {
 
 			scale *= dollyScale;
 

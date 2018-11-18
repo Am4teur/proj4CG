@@ -7,7 +7,6 @@ class GraphicEntity extends THREE.Object3D{
         this.position.x = x;
         this.position.y = y;
         this.position.z = z;
-        //this.material
     }
 
     changeMaterialToPhong(){

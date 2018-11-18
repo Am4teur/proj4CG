@@ -8642,6 +8642,26 @@ Object.assign( THREE.Object3D.prototype, THREE.EventDispatcher.prototype, {
 
 	}(),
 
+	rotateOnWorldAxis: function () {
+
+		// rotate object on axis in world space
+		// axis is assumed to be normalized
+		// method assumes no rotated parent
+
+		var q1 = new THREE.Quaternion();
+
+		return function rotateOnWorldAxis( axis, angle ) {
+
+			q1.setFromAxisAngle( axis, angle );
+
+			this.quaternion.premultiply( q1 );
+
+			return this;
+
+		};
+
+	}(),
+
 	rotateX: function () {
 
 		var v1 = new THREE.Vector3( 1, 0, 0 );

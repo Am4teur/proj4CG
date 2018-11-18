@@ -2,7 +2,7 @@
 /* global THREE, requestAnimationFrame, console //console.log()*/
 
 /* Global Variables */
-var camera, scene, renderer;
+var camera, controls, scene, renderer;
 
 var snookerBall, rubikCube, chessboard;
 var directionalLight, pointLight;
@@ -17,7 +17,7 @@ function createScene() {
     scene.add(new THREE.AxisHelper(5));
     
     // criacao da snookerBall, da rubikCube e do chessboard e coloca los na cena
-    snookerBall = new SnookerBall(0, 0, 12);
+    snookerBall = new SnookerBall(0, 0, 0);
     scene.add(snookerBall);
     rubikCube = new RubikCube(0, 0.5, 0);
     scene.add(rubikCube);
@@ -27,10 +27,18 @@ function createScene() {
     
     // criacao das luzes directionalLight e a pointLight e coloca las na cena
     directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    //directionalLight.position.set(0 , 10, -10);
+    directionalLight.position.set(0 , 10, -2);
+    directionalLight.target = rubikCube;
     scene.add(directionalLight);
     pointLight = new THREE.PointLight(0xffffff, 1); // PointLight( color : Integer, intensity : Float, distance : Number, decay : Float ); suposto ter decay
-    pointLight.position.set(10, 2, 10); //tem de ficar em cima do chessboard
+    
+    //
+    var material = new THREE.MeshBasicMaterial({color: 0xff6600, wireframe: false});
+    var geometry = new THREE.SphereGeometry(0.5, 10, 10);
+    pointLight.add(new THREE.Mesh(geometry, material));
+    //
+
+    pointLight.position.set(10, -1.5, 10); // tem de ficar em cima do chessboard
     pointLight.target = rubikCube; // tem de iluminar bem a bola e o cubo
     scene.add(pointLight);
 }
@@ -70,6 +78,7 @@ function onKeyDown(e){
             break;
         case 83: // 'S'
         case 115: // 's'
+            controls.autoRotate = !controls.autoRotate;
             break;
         case 87: // 'W'
         case 119: // 'w'
@@ -107,16 +116,23 @@ function init() {
 
     createScene();
 
-    camera = new THREE.PerspectiveCamera(70,
-                                         window.innerWidth / window.innerHeight,
-                                         1,
-                                         1000);
-    camera.position.set(50, 50, 50);
-    camera.lookAt(scene.position);
-
     renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+
+    camera = new THREE.PerspectiveCamera(70,
+                                        window.innerWidth / window.innerHeight,
+                                        1,
+                                        1000);
+    camera.position.set(50, 50, 50);
+
+    // controls
+
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.autoRotate = false;
+
+    //
 
     document.addEventListener('keydown', onKeyDown, true);
     window.addEventListener('resize', onResize);
@@ -128,5 +144,11 @@ function animate() {
     'use strict';
     
     render();
+
+    controls.update();
+
+    snookerBall.updatePosition();
+    //rubikCube.updatePosition();
+
     requestAnimationFrame(animate);
 }

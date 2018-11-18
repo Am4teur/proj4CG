@@ -5,11 +5,14 @@
         <title>Projeto 4 - CG@IST/UL (2018/2019)</title>
         <style>
             body {
+                background: #000000;
                 margin: 0px;
-                background-color: #ffffff;
                 overflow: hidden;
             }
         </style>
+    </head>
+
+    <body>
         <script src="three.js"></script>
         <script src="OrbitControls.js"></script>
         <script src="cena.js"></script>
@@ -17,11 +20,8 @@
         <script src="snookerBall.js"></script>
         <script src="rubikCube.js"></script>
         <script src="chessboard.js"></script>
-    </head>
-    <body>      
         <script>
             init();
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
             animate();
         </script>
     </body>
