@@ -4,8 +4,10 @@
 /* Global Variables */
 var camera, controls, scene, renderer;
 
-var snookerBall, rubikCube, chessboard;
+var snookerBall, rubikCube, chessboard, pauseObj;
 var directionalLight, pointLight;
+var pause = false;
+var ballMov = true;
 
 /* ________________ */
 
@@ -23,7 +25,8 @@ function createScene() {
     scene.add(rubikCube);
     chessboard = new Chessboard(0, -3, 0);
     scene.add(chessboard);
-
+    console.log(rubikCube);
+    console.log(rubikCube.children[0].material.materials[0].wireframe);
     
     // criacao das luzes directionalLight e a pointLight e coloca las na cena
     directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -49,6 +52,11 @@ function onKeyDown(e){
     switch (e.keyCode) {
         case 66: // 'B'
         case 98: // 'b'
+            ballMov = !ballMov;
+            break;
+        case 67: // 'C'
+        case 99: // 'c'
+            controls.autoRotate = !controls.autoRotate;
             break;
         case 68: // 'D'
         case 100: // 'd'
@@ -59,13 +67,13 @@ function onKeyDown(e){
         case 108: // 'l'
             if(snookerBall.children[0].material.type == "MeshPhongMaterial"){
                 snookerBall.changeMaterialToBasic();
-                rubikCube.changeMaterialToBasic();
-                chessboard.changeMaterialToBasic();
+                rubikCube.changeCubeMaterialToBasic();
+                chessboard.changeCubeMaterialToBasic();
             }
             else{
                 snookerBall.changeMaterialToPhong();
-                rubikCube.changeMaterialToPhong();
-                chessboard.changeMaterialToPhong();
+                rubikCube.changeCubeMaterialToPhong();
+                chessboard.changeCubeMaterialToPhong();
             }
             break;
         case 80: // 'P'
@@ -78,7 +86,6 @@ function onKeyDown(e){
             break;
         case 83: // 'S'
         case 115: // 's'
-            controls.autoRotate = !controls.autoRotate;
             break;
         case 87: // 'W'
         case 119: // 'w'
@@ -86,10 +93,14 @@ function onKeyDown(e){
                 snookerBall.children[i].material.wireframe = !snookerBall.children[i].material.wireframe;
             }
             for(i = 0; i < rubikCube.children.length; i++){
-                rubikCube.children[i].material.wireframe = !rubikCube.children[i].material.wireframe;
+                for(var j = 0; j < rubikCube.children[i].material.materials.length; j++){
+                    rubikCube.children[i].material.materials[j].wireframe = !rubikCube.children[i].material.materials[j].wireframe;
+                }
             }
             for(i = 0; i < chessboard.children.length; i++){
-                chessboard.children[i].material.wireframe = !chessboard.children[i].material.wireframe;
+                for(var j = 0; j < chessboard.children[i].material.materials.length; j++){
+                    chessboard.children[i].material.materials[j].wireframe = !chessboard.children[i].material.materials[j].wireframe;
+                }
             }
             break;
     }
@@ -128,10 +139,8 @@ function init() {
     camera.position.set(50, 50, 50);
 
     // controls
-
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.autoRotate = false;
-
     //
 
     document.addEventListener('keydown', onKeyDown, true);
@@ -142,13 +151,12 @@ function init() {
 
 function animate() {
     'use strict';
-    
+
     render();
 
     controls.update();
-
-    snookerBall.updatePosition();
-    //rubikCube.updatePosition();
-
+    if(ballMov){
+        snookerBall.updatePosition();
+    }
     requestAnimationFrame(animate);
 }
