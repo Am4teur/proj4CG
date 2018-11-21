@@ -2,13 +2,12 @@
 /* global THREE, requestAnimationFrame, console //console.log()*/
 
 /* Global Variables */
-var camera, controls, scene, renderer;
+var camera, camera2, controls, scene, scene2, renderer;
 
 var snookerBall, rubikCube, chessboard, pauseObj;
 var directionalLight, pointLight;
 var pause = false;
 var ballMov = true;
-var vecPos = [];
 
 /* ________________ */
 
@@ -23,8 +22,6 @@ function createScene() {
     scene.add(rubikCube);
     chessboard = new Chessboard(0, -3, 0);
     scene.add(chessboard);
-    pauseObj = new PauseObj(3500, 0, 0);
-    scene.add(pauseObj);
     
     // criacao das luzes directionalLight e a pointLight e coloca las na cena
     directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -42,6 +39,13 @@ function createScene() {
     pointLight.position.set(0, 20, 0);
     pointLight.target = rubikCube;
     scene.add(pointLight);
+}
+
+function createScene2(){
+    'use strict';
+
+    pauseObj = new PauseObj(0, 0, 0);
+    scene2.add(pauseObj);
 }
 
 function onKeyDown(e){
@@ -96,12 +100,6 @@ function onKeyDown(e){
         case 83: // 'S'
         case 115: // 's'
             controls.autoRotate = !controls.autoRotate;
-            if(!pause){
-                vecPos[0] = camera.position.x;
-                vecPos[1] = camera.position.y;
-                vecPos[2] = camera.position.z;
-            }
-            camera.position.y > 1 ? camera.position.set(3506, 0, 0) : camera.position.set(vecPos[0], vecPos[1], vecPos[2]);
             pause = !pause;
             break;
         case 87: // 'W'
@@ -136,20 +134,22 @@ function onResize() {
     }
 }
 
-function render() {
+function render(scn, cm) {
     'use strict';
-    renderer.render(scene, camera);
+    renderer.render(scn, cm);
 }
 
 function init() {
     'use strict';
 
     scene = new THREE.Scene();
+    scene2 = new THREE.Scene();
 
     createScene();
+    createScene2();
 
     renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
@@ -158,6 +158,11 @@ function init() {
                                         1,
                                         1000);
     camera.position.set(50, 50, 50);
+    scene.add(camera);
+
+    camera2 = new THREE.OrthographicCamera(window.innerWidth / - 16, window.innerWidth / 16, window.innerHeight / 16, window.innerHeight / - 16, -200, 500);
+    camera2.position.set(0, 0, 0);
+    scene2.add(camera2);
 
     // controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -167,13 +172,18 @@ function init() {
     document.addEventListener('keydown', onKeyDown, true);
     window.addEventListener('resize', onResize);
     
-    render();
+    render(scene, camera);
 }
 
 function animate() {
     'use strict';
 
-    render();
+    if(pause){
+        render(scene2, camera2);
+    }
+    else{
+        render(scene, camera);
+    }
 
     controls.update();
 
@@ -191,4 +201,5 @@ function reset(){
     createScene();
     camera.position.set(50, 50, 50);
     controls.autoRotate = true;
+    ballMov = true;
 }

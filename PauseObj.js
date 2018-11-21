@@ -15,7 +15,7 @@ class PauseObj extends GraphicEntity{
     }
 
     addCube(x, y, z){
-        this.geometry = new THREE.BoxGeometry(5, 5, 5);
+        this.geometry = new THREE.BoxGeometry(80, 80, 80);
         var mesh = new THREE.Mesh(this.geometry, this.material);
         mesh.position.set(x, y, z);
         this.add(mesh);

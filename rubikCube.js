@@ -16,12 +16,12 @@ class RubikCube extends GraphicEntity{
 
         /* Materials */
         this.materialsPhong = [
-            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.redSide,    bumpMap: this.bumpMap, wireframe: false}), // RIGHT SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.orangeSide, bumpMap: this.bumpMap, wireframe: false}), // LEFT SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.yellowSide, bumpMap: this.bumpMap, wireframe: false}), // TOP SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.whiteSide,  bumpMap: this.bumpMap, wireframe: false}), // BOTTOM SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.blueSide,   bumpMap: this.bumpMap, wireframe: false}), // FRONT SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.greenSide,  bumpMap: this.bumpMap, wireframe: false})  // BACK SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.redSide,    bumpMap: this.bumpMap, shininess: 60, wireframe: false}), // RIGHT SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.orangeSide, bumpMap: this.bumpMap, shininess: 60, wireframe: false}), // LEFT SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.yellowSide, bumpMap: this.bumpMap, shininess: 60, wireframe: false}), // TOP SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.whiteSide,  bumpMap: this.bumpMap, shininess: 60, wireframe: false}), // BOTTOM SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.blueSide,   bumpMap: this.bumpMap, shininess: 60, wireframe: false}), // FRONT SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: this.greenSide,  bumpMap: this.bumpMap, shininess: 60, wireframe: false})  // BACK SIDE
         ];
         this.materialPhongFace = new THREE.MeshFaceMaterial(this.materialsPhong);
 
