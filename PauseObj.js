@@ -5,7 +5,7 @@ class PauseObj extends GraphicEntity{
     constructor(x, y, z){
         super(x, y, z);
 
-        this.map = new THREE.TextureLoader().load("Tabuleiro.png");
+        this.map = new THREE.TextureLoader().load("Pause.png");
 
         this.material = new THREE.MeshBasicMaterial({color: 0xffffff,
                                                         map: this.map,

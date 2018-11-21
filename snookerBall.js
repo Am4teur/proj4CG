@@ -21,8 +21,6 @@ class SnookerBall extends GraphicEntity{
         this.addBall(0, 0, 12);
 
         // updatePostion variables
-        this.vx = 0.001;
-        this.vz = 1;
         this.t = Date.now();
         this.delta = 0;
     }
@@ -34,19 +32,27 @@ class SnookerBall extends GraphicEntity{
         this.add(this.mesh);
     }
 
-    updatePosition(){
+    updatePosition(ballMov){
         // obtencao do tempo/delta
+        this.t = Date.now();
         var now = Date.now();
-        //this.delta = now - this.t;
     
         // velocidade maxima
-        if(this.vx * this.delta <= 0.1){
-            this.delta = now - this.t;
+        if(this.delta < 3 && ballMov){
+            this.delta += 0.4*(now - this.t);
         }
+        else if(this.delta > 0 && !ballMov){
+            this.delta -= 0.4*(now - this.t) ; 
+        }
+        if(this.delta >= 3){
+            this.delta = 3;
+        }
+        if(this.delta <= 0){
+            this.delta = 0; 
+        }
+
     
-        this.rotation.y += Math.PI/180; // (this.vx * this.delta);
-        this.mesh.rotation.z -= Math.PI/90;
-        //this.position.x += this.vx * Math.cos() * this.delta; // cos
-        //this.position.z += this.vz * this.delta; // sen
+        this.rotation.y += Math.PI/180 * this.delta;
+        this.mesh.rotation.z -= Math.PI/90 * this.delta;
     }
 }
