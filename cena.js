@@ -25,14 +25,13 @@ function createScene() {
     scene.add(chessboard);
     pauseObj = new PauseObj(3500, 0, 0);
     scene.add(pauseObj);
-    console.log(scene);
     
     // criacao das luzes directionalLight e a pointLight e coloca las na cena
     directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(0 , 10, -2);
     directionalLight.target = rubikCube;
     scene.add(directionalLight);
-    pointLight = new THREE.PointLight(0xffffff, 1); // PointLight( color : Integer, intensity : Float, distance : Number, decay : Float ); suposto ter decay
+    pointLight = new THREE.PointLight(0xffffff, 1, 100, 2); // PointLight( color : Integer, intensity : Float, distance : Number, decay : Float ); suposto ter decay
     
     //
     var material = new THREE.MeshBasicMaterial({color: 0xff6600, wireframe: false});
@@ -40,8 +39,8 @@ function createScene() {
     pointLight.add(new THREE.Mesh(geometry, material));
     //
 
-    pointLight.position.set(0, 20, 0); // tem de ficar em cima do chessboard
-    pointLight.target = rubikCube; // tem de iluminar bem a bola e o cubo
+    pointLight.position.set(0, 20, 0);
+    pointLight.target = rubikCube;
     scene.add(pointLight);
 }
 

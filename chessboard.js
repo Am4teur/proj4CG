@@ -11,12 +11,12 @@ class Chessboard extends GraphicEntity{
 
         /* Materials */
         this.materialsPhong = [
-            new THREE.MeshPhongMaterial({color: 0xffffff, wireframe: false}), // RIGHT SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, wireframe: false}), // LEFT SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, wireframe: false,  map: this.map}), // TOP SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, wireframe: false}), // BOTTOM SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, wireframe: false}), // FRONT SIDE
-            new THREE.MeshPhongMaterial({color: 0xffffff, wireframe: false})  // BACK SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, shininess: 5, wireframe: false}), // RIGHT SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, shininess: 5, wireframe: false}), // LEFT SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, shininess: 5, wireframe: false,  map: this.map}), // TOP SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, shininess: 5, wireframe: false}), // BOTTOM SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, shininess: 5, wireframe: false}), // FRONT SIDE
+            new THREE.MeshPhongMaterial({color: 0xffffff, shininess: 5, wireframe: false})  // BACK SIDE
         ];
         this.materialPhongFace = new THREE.MeshFaceMaterial(this.materialsPhong);
 
